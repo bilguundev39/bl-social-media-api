@@ -19,6 +19,7 @@ To deploy prod use Dockerfile build and register to Docker hub or private regist
 
 ```plaintext
 social-media-api/
+├── migrations/              # Migration files
 ├── src/
 │   ├── config/              # Configuration files and environment setup
 │   ├── commands/            # CQRS commands for actions like creating posts
