@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  social-media-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: social-media-api
+    ports:
+      - 3005:3000
+    volumes:
+      - .:/home/node/social-media-api
+    environment:
+      NODE_ENV: dev
+    networks:
+      - social_media_network
   ## for now I only started single mongo instance, if production we should start mongo cluster with shards
   ## db can scale up/down based on resource allocation
   mongodb:
