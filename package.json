@@ -8,7 +8,7 @@
     "start": "node dist/index.js",
     "start-dev": "ts-node -r tsconfig-paths/register ./src/index.ts",
     "watch": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "format": "ts-standard --fix"
   },
   "standard": {
@@ -39,6 +39,7 @@
     "mongoose": "^8.8.0",
     "multer": "^1.4.5-lts.1",
     "redis": "^4.7.0",
+    "vitest": "^2.1.4",
     "zod": "^3.23.8"
   }
 }
