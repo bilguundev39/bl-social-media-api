@@ -91,6 +91,8 @@ The API provides several endpoints for interacting with posts, comments, and fil
 
 ### API Endpoints
 
+See more details from postman json
+
 - `POST /api/posts/` - Create a new post.
 - `GET /api/posts/` - Retrieve all posts with pagination.
 - `POST /api/posts/:id/comments` - Add a comment to a post.

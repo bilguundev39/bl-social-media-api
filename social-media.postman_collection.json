@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "4676cba4-a89c-444c-a9dc-d4c5ef0c00c1",
+		"name": "social-media",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33352217"
+	},
+	"item": [
+		{
+			"name": "get-posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/posts?limit=3&direction=next",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "3"
+						},
+						{
+							"key": "direction",
+							"value": "next"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"caption\": \"some caption tho\",\n    \"body\": \"http://localhost:3000/api/file/672a0b12d3e8171cd25c4f1a.jpg\",\n    \"creator\": \"507f1f77bcf86cd799439011\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-comment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"Your comment really inspired me to work on new feature which enables us communicate through WEB3\",\n    \"creator\": \"507f1f77bcf86cd799439011\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/posts/6726f3fe6a71f284ec3f6cfa/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts",
+						"6726f3fe6a71f284ec3f6cfa",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-comment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"creator\": \"507f1f77bcf86cd799439011\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/posts/6726f3fe6a71f284ec3f6cfa/comment/6726f3f56a71f284ec3f6ce6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts",
+						"6726f3fe6a71f284ec3f6cfa",
+						"comment",
+						"6726f3f56a71f284ec3f6ce6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload-file",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "totalChunks",
+						"value": "10",
+						"disabled": true
+					},
+					{
+						"key": "chunkId",
+						"value": "1",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/Users/mezorn/Downloads/pexels-m-venter-792254-1659438.jpg"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/upload/672a0aced3e8171cd25c4f19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"upload",
+						"672a0aced3e8171cd25c4f19"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-presigned-url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/upload/presigned",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"upload",
+						"presigned"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
