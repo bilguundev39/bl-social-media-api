@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  ## for now I only started single mongo instance, if production we should start mongo cluster with shards
+  ## db can scale up/down based on resource allocation
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_container
+    networks:
+      - social_media_network 
+    ports:
+      - "27017:27017" 
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:latest
+    container_name: social_media_redis
+    networks:
+      - social_media_network 
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+  
+  zookeeper:
+    image: 'confluentinc/cp-zookeeper:latest'
+    networks: 
+      - social_media_network
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - '2181:2181'
+
+  kafka1:
+    image: 'confluentinc/cp-kafka:latest'
+    depends_on:
+      - zookeeper
+    networks: 
+      - social_media_network
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,INTERNAL://kafka1:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    ports:
+      - '9092:9092'
+
+  kafka2:
+    image: 'confluentinc/cp-kafka:latest'
+    depends_on:
+      - zookeeper
+    networks: 
+      - social_media_network
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9093,INTERNAL://kafka2:39092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    ports:
+      - '9093:9093'
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    networks: 
+      - social_media_network
+    depends_on:
+      - kafka1
+      - kafka2
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local-cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:29092,kafka2:39092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    ports:
+      - '8080:8080'
+
+networks:
+  social_media_network:
+    driver: bridge  
+
+volumes:
+  mongo_data:
+    driver: local  
+  redis_data:
+    driver: local
