@@ -3,7 +3,9 @@
 
 This repository contains the backend API for a social media application built with Node.js and TypeScript. The API supports functionalities like post creation, comment management, file storage, and caching. Designed with scalability and modularity in mind, this project follows microservices principles like CQRS and uses Kafka for communation between services, Redis for caching, and MongoDB for data persistence.
 
-Inorder prod deployment, I would use S3 for file management, instead using local, gets Presigned-url from S3, use public storage to make images available
+Alternative I would use S3 for file management, instead using local, gets Presigned-url from S3, use public storage to make images available
+
+To deploy prod use Dockerfile build and register to Docker hub or private registry, then its accessible to K8s cluster.
 
 ## Table of Contents
 
